@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://dvyoypsyouamgxoauvbg.supabase.co";
-const SUPABASE_KEY = "sb_publishable_lveeEZsiV0M4VJ8-TwphEw_vGHB1Eor";
+const SUPABASE_KEY = "SUA_CHAVE_AQUI"; // ⚠️ substitua corretamente
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -31,7 +31,6 @@ async function login() {
   if (error) {
     alert(error.message);
   } else {
-    alert("Login realizado!");
     verificarUsuario();
   }
 }
@@ -42,27 +41,33 @@ async function verificarUsuario() {
   if (data.user) {
     document.getElementById('login').style.display = 'none';
     document.getElementById('sistema').style.display = 'block';
+
+    // 🔥 carrega dados após login
+    if (typeof carregarDados === "function") {
+      carregarDados();
+    }
+
   } else {
     document.getElementById('login').style.display = 'block';
     document.getElementById('sistema').style.display = 'none';
   }
 }
+
 async function logout() {
   const { error } = await supabaseClient.auth.signOut();
 
   if (error) {
     alert("Erro ao sair");
   } else {
-    alert("Logout realizado");
     verificarUsuario();
   }
 }
-// 🔥 IMPORTANTE
+
+// expor funções globalmente
 window.supabaseClient = supabaseClient;
 window.cadastrar = cadastrar;
 window.login = login;
-window.verificarUsuario = verificarUsuario;
 window.logout = logout;
+window.verificarUsuario = verificarUsuario;
 
-// 🔥 só roda quando carregar tudo
 window.onload = verificarUsuario;

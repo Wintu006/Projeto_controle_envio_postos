@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Controle de Insumos</title>
   <link rel="stylesheet" href="style.css">
-  <link>
 </head>
 <body>
 
@@ -20,6 +19,7 @@
 
 <div id="sistema" style="display:none;">
   <button onclick="logout()">Sair</button>
+
   <div class="container">
     <h1>Controle de Insumos</h1>
 
@@ -32,7 +32,7 @@
     <label>Postos</label>
     <details>
       <summary>Selecionar postos</summary>
-      <div id="postos" class="postos">
+      <div id="postos">
         <label><input type="checkbox" value="Coité"> Coité</label>
         <label><input type="checkbox" value="Salgadalia"> Salgadalia</label>
         <label><input type="checkbox" value="Riachão"> Riachão</label>
@@ -67,7 +67,6 @@
       <tbody id="tabela"></tbody>
     </table>
   </div>
-  
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>

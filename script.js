@@ -1,4 +1,3 @@
-
 let dados = [];
 
 function renderizar() {
@@ -20,6 +19,8 @@ function renderizar() {
 async function carregarDados() {
   const { data: userData } = await supabaseClient.auth.getUser();
   const user = userData.user;
+
+  if (!user) return;
 
   const { data, error } = await supabaseClient
     .from('envios')
@@ -48,7 +49,6 @@ async function adicionar() {
     return;
   }
 
-  // pega usuário logado
   const { data: userData } = await supabaseClient.auth.getUser();
   const user = userData.user;
 
@@ -68,32 +68,14 @@ async function adicionar() {
     alert("Erro ao salvar");
     console.error(error);
   } else {
-    alert("Salvo no Supabase 🚀");
+    alert("Salvo com sucesso 🚀");
+
+    // limpa formulário
+    document.getElementById('insumo').value = '';
+    document.getElementById('quantidade').value = '';
+    document.getElementById('data').value = '';
+    document.querySelectorAll('#postos input').forEach(cb => cb.checked = false);
+
     carregarDados();
   }
 }
-
-  const registros = postosSelecionados.map(posto => ({
-    insumo,
-    quantidade,
-    posto,
-    data
-  }));
-
-  const url = "https://sheetdb.io/api/v1/vinx1o8k4zxoi";
-
-  await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ data: registros })
-  });
-
-  document.getElementById('insumo').value = '';
-  document.getElementById('quantidade').value = '';
-  document.getElementById('data').value = '';
-  document.querySelectorAll('#postos input').forEach(cb => cb.checked = false);
-
-  await carregarDados();
-
-
-carregarDados();
