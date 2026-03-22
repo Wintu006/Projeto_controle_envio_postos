@@ -47,12 +47,22 @@ async function verificarUsuario() {
     document.getElementById('sistema').style.display = 'none';
   }
 }
+async function logout() {
+  const { error } = await supabaseClient.auth.signOut();
 
+  if (error) {
+    alert("Erro ao sair");
+  } else {
+    alert("Logout realizado");
+    verificarUsuario();
+  }
+}
 // 🔥 IMPORTANTE
 window.supabaseClient = supabaseClient;
 window.cadastrar = cadastrar;
 window.login = login;
 window.verificarUsuario = verificarUsuario;
+window.logout = logout;
 
 // 🔥 só roda quando carregar tudo
 window.onload = verificarUsuario;
