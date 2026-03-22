@@ -48,5 +48,11 @@ async function verificarUsuario() {
   }
 }
 
-// roda ao carregar
-verificarUsuario();
+// 🔥 IMPORTANTE
+window.supabaseClient = supabaseClient;
+window.cadastrar = cadastrar;
+window.login = login;
+window.verificarUsuario = verificarUsuario;
+
+// 🔥 só roda quando carregar tudo
+window.onload = verificarUsuario;
