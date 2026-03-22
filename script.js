@@ -18,10 +18,20 @@ function renderizar() {
 }
 
 async function carregarDados() {
-  const url = "https://sheetdb.io/api/v1/vinx1o8k4zxoi";
+  const { data: userData } = await supabaseClient.auth.getUser();
+  const user = userData.user;
 
-  const res = await fetch(url);
-  dados = await res.json();
+  const { data, error } = await supabaseClient
+    .from('envios')
+    .select('*')
+    .eq('user_id', user.id);
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  dados = data;
   renderizar();
 }
 
@@ -37,6 +47,31 @@ async function adicionar() {
     alert('Preencha tudo');
     return;
   }
+
+  // pega usuário logado
+  const { data: userData } = await supabaseClient.auth.getUser();
+  const user = userData.user;
+
+  const registros = postosSelecionados.map(posto => ({
+    user_id: user.id,
+    insumo,
+    quantidade,
+    posto,
+    data
+  }));
+
+  const { error } = await supabaseClient
+    .from('envios')
+    .insert(registros);
+
+  if (error) {
+    alert("Erro ao salvar");
+    console.error(error);
+  } else {
+    alert("Salvo no Supabase 🚀");
+    carregarDados();
+  }
+}
 
   const registros = postosSelecionados.map(posto => ({
     insumo,
