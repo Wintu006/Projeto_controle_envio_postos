@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://dvyoypsyouamgxoauvbg.supabase.co";
-const SUPABASE_KEY = "SUA_CHAVE_AQUI"; // ⚠️ substitua corretamente
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2eW95cHN5b3VhbWd4b2F1dmJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxMzc4MzQsImV4cCI6MjA4OTcxMzgzNH0.GJA8D3M54XFBfOiG7_55lcmulDMPjqU_4rUqfbD7RD8"; // ⚠️ substitua corretamente
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
