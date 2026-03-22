@@ -3,23 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Controle de Insumos</title>
-  <style>
-    body { font-family: Arial; background:#f4f6f9; padding:20px; }
-    h1 { text-align:center; }
-    .container { max-width:900px; margin:auto; background:#fff; padding:20px; border-radius:10px; }
-    label { font-weight:bold; display:block; margin-top:10px; }
-    input { width:100%; padding:8px; margin-top:5px; }
-    .postos label { display:block; font-weight:normal; }
-    button { margin-top:15px; padding:10px; background:#007bff; color:#fff; border:none; border-radius:5px; }
-    table { width:100%; margin-top:20px; border-collapse:collapse; }
-    th,td { border:1px solid #ddd; padding:8px; text-align:center; }
-    th { background:#007bff; color:#fff; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-  <h1>Controle envio de Insumos</h1>
+  <h1>Controle de Insumos</h1>
 
   <label>Insumo</label>
   <input type="text" id="insumo">
@@ -28,10 +17,9 @@
   <input type="number" id="quantidade">
 
   <label>Postos</label>
-  <label>Postos</label>
-  <details style="margin-top:5px;">
-    <summary style="cursor:pointer; padding:8px; border:1px solid #ccc; border-radius:5px;">Selecionar postos</summary>
-    <div id="postos" class="postos" style="margin-top:10px; max-height:200px; overflow:auto;">
+  <details>
+    <summary>Selecionar postos</summary>
+    <div id="postos" class="postos">
       <label><input type="checkbox" value="Coité"> Coité</label>
       <label><input type="checkbox" value="Salgadalia"> Salgadalia</label>
       <label><input type="checkbox" value="Riachão"> Riachão</label>
@@ -67,85 +55,6 @@
   </table>
 </div>
 
-<script>
-let dados = [];
-
-function renderizar() {
-  const tbody = document.getElementById('tabela');
-  tbody.innerHTML = '';
-
-  dados.forEach(d => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${d.insumo}</td>
-        <td>${d.quantidade}</td>
-        <td>${d.posto}</td>
-        <td>${d.data}</td>
-      </tr>
-    `;
-  });
-}
-
-async function carregarDados() {
-  const url = "https://sheetdb.io/api/v1/vinx1o8k4zxoi";
-
-  try {
-    const res = await fetch(url);
-    const json = await res.json();
-
-    dados = json;
-    renderizar();
-
-  } catch (erro) {
-    console.error('Erro ao carregar dados:', erro);
-  }
-}
-
-async function adicionar() {
-  const insumo = document.getElementById('insumo').value;
-  const quantidade = document.getElementById('quantidade').value;
-  const data = document.getElementById('data').value;
-
-  const checkboxes = document.querySelectorAll('#postos input:checked');
-  const postosSelecionados = Array.from(checkboxes).map(cb => cb.value);
-
-  if (!insumo || !quantidade || !data || postosSelecionados.length === 0) {
-    alert('Preencha tudo');
-    return;
-  }
-
-  const registros = postosSelecionados.map(posto => ({
-    insumo,
-    quantidade,
-    posto,
-    data
-  }));
-
-  const url = "https://sheetdb.io/api/v1/vinx1o8k4zxoi";
-
-  try {
-    await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: registros })
-    });
-
-    alert('Salvo!');
-
-    document.getElementById('insumo').value = '';
-    document.getElementById('quantidade').value = '';
-    document.getElementById('data').value = '';
-    document.querySelectorAll('#postos input').forEach(cb => cb.checked = false);
-
-    await carregarDados();
-
-  } catch (erro) {
-    console.error('Erro:', erro);
-  }
-}
-
-carregarDados();
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
