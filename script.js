@@ -94,6 +94,6 @@ async function adicionar() {
   document.querySelectorAll('#postos input').forEach(cb => cb.checked = false);
 
   await carregarDados();
-}
+
 
 carregarDados();
